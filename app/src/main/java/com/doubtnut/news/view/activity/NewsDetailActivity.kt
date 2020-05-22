@@ -49,8 +49,17 @@ class NewsDetailActivity : AppCompatActivity() {
         // Just for Reference
         activity = this
 
+        // Setting Title
+        supportActionBar?.title = "Article Details"
+
         // Get Serialized article to show its info in this activity
         val article = intent.getSerializableExtra(KEY_ARTICLE_OBJECT) as Article
+
+        // Bind news article with activity views
+        bindArticle(article)
+    }
+
+    private fun bindArticle(article: Article) {
 
         viewBinding.title.text = article.title
         viewBinding.description.text = article.description?.toHtmlSpanned();
@@ -71,7 +80,7 @@ class NewsDetailActivity : AppCompatActivity() {
                 .into(viewBinding.image)
         } else {
             GlideApp.with(context)
-                .load(R.drawable.news_placeholder as Int)
+                .load(R.drawable.news_placeholder)
                 .into(viewBinding.image)
         }
 

@@ -14,4 +14,8 @@ object ToastUtils {
     fun show(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
+
+    fun showLong(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
 }

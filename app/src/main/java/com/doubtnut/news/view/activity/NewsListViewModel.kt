@@ -7,6 +7,8 @@ import com.doubtnut.news.model.Article
 import com.doubtnut.news.model.Repository
 import com.doubtnut.news.model.remote.RestAPI
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class NewsListViewModel : ViewModel() {
@@ -23,5 +25,12 @@ class NewsListViewModel : ViewModel() {
 
     fun getNewsArticleList(): Observable<List<Article>> {
         return Repository(context, restAPI).getNewsArticleList()
+            .subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun onCleared() {
+        super.onCleared()
     }
 }

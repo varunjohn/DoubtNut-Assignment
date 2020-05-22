@@ -14,9 +14,10 @@ import com.doubtnut.news.model.Article
 import com.doubtnut.news.utils.ToastUtils
 import com.doubtnut.news.view.adapters.AdapterClickListener
 import com.doubtnut.news.view.adapters.NewsListAdapter
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class NewsListActivity : AppCompatActivity(), AdapterClickListener<Article> {
+class NewsListActivity : AppCompatActivity(), AdapterClickListener<Article>, View.OnClickListener {
 
     @Inject
     lateinit var context: Context
@@ -28,6 +29,8 @@ class NewsListActivity : AppCompatActivity(), AdapterClickListener<Article> {
     private lateinit var viewBinding: ActivityNewsListBinding
 
     private lateinit var newsListAdapter: NewsListAdapter
+
+    private lateinit var disposable: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,17 +55,41 @@ class NewsListActivity : AppCompatActivity(), AdapterClickListener<Article> {
         }.adapter as NewsListAdapter
 
         // Rx pattern for getting list of news from Rest client or Database
-        newsListViewModel.getNewsArticleList().subscribe({
+        getNewsList()
+
+        viewBinding.retry.setOnClickListener(this)
+    }
+
+    private fun getNewsList() {
+        disposable = newsListViewModel.getNewsArticleList().subscribe({
+            newsListAdapter.clearList()
             newsListAdapter.addArticles(it)
             newsListAdapter.notifyDataSetChanged()
             viewBinding.progressBar.visibility = View.GONE
         }, {
-            ToastUtils.show("can't fetch news, try later...")
+            ToastUtils.showLong("Can't fetch news, try later...")
+            viewBinding.progressBar.visibility = View.GONE
+            viewBinding.retry.visibility = View.VISIBLE
         })
     }
 
     // Adapters click events will be handled here
     override fun onClick(view: View, model: Article, viewHolder: RecyclerView.ViewHolder) {
         NewsDetailActivity.open(activity, model)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            viewBinding.retry -> {
+                viewBinding.retry.visibility = View.GONE
+                viewBinding.progressBar.visibility = View.VISIBLE
+                getNewsList()
+            }
+        }
     }
 }

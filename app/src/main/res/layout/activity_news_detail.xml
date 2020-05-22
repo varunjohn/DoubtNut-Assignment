@@ -47,9 +47,9 @@
             android:fontFamily="@font/roboto_medium"
             android:lineSpacingExtra="6dp"
             android:padding="4dp"
-            android:text="CNN 12:30 PM, 26 Nov 2019 "
             android:textColor="@android:color/black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="CNN 12:30 PM, 26 Nov 2019 " />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"

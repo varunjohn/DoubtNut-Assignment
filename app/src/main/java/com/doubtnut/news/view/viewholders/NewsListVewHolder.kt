@@ -40,7 +40,7 @@ class NewsListVewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 .into(viewBinding.image)
         } else {
             GlideApp.with(context)
-                .load(R.drawable.news_placeholder as Int)
+                .load(R.drawable.news_placeholder)
                 .into(viewBinding.image)
         }
 

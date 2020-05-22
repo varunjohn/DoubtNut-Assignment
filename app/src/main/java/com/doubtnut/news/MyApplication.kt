@@ -21,7 +21,7 @@ class MyApplication : Application() {
         diComponent = initializeDI()
     }
 
-    fun initializeDI(): AppComponent {
+    private fun initializeDI(): AppComponent {
         return DaggerAppComponent.builder().contextModule(this)
             .networkModule(AppConstants.RestApiConstant.BASE_URL).build()
     }

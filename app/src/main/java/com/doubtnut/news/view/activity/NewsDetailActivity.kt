@@ -16,6 +16,7 @@ import javax.inject.Inject
 
 class NewsDetailActivity : AppCompatActivity() {
 
+    // A pattern to launch the activity, open function will be overloaded..
     companion object {
         private const val KEY_ARTICLE_OBJECT = "article"
 

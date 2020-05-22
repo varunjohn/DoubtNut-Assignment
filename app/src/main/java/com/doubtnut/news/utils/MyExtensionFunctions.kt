@@ -3,8 +3,6 @@ package com.doubtnut.news.utils
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 fun String.toHtmlSpanned(): Spanned {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -14,6 +12,3 @@ fun String.toHtmlSpanned(): Spanned {
         return Html.fromHtml(this)
     }
 }
-
-inline fun <reified T> Gson.fromJson(json: String) =
-    fromJson<T>(json, object : TypeToken<T>() {}.type)

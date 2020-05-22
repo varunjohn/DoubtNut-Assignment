@@ -78,11 +78,7 @@ class NewsListActivity : AppCompatActivity(), AdapterClickListener<Article>, Vie
         NewsDetailActivity.open(activity, model)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.dispose()
-    }
-
+    // View click events will be handled here
     override fun onClick(v: View?) {
         when (v) {
             viewBinding.retry -> {
@@ -91,5 +87,10 @@ class NewsListActivity : AppCompatActivity(), AdapterClickListener<Article>, Vie
                 getNewsList()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
     }
 }

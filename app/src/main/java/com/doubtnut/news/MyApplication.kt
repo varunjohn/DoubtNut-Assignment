@@ -16,8 +16,10 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         ToastUtils.initialize(this)
         SharedPreferencesHelper.initialize(this, Gson())
+
         diComponent = initializeDI()
     }
 
